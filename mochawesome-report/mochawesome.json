@@ -1,0 +1,178 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-11-09T07:17:50.133Z",
+    "end": "2023-11-09T07:18:35.794Z",
+    "duration": 45661,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d797efa2-a483-4dfe-9f84-a8a573b13938",
+      "title": "",
+      "fullFile": "/Users/schoolboy/ev_energy_app_test/tests/ev_energy_testing.js",
+      "file": "/tests/ev_energy_testing.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+          "title": "EV Energy Testing",
+          "fullFile": "/Users/schoolboy/ev_energy_app_test/tests/ev_energy_testing.js",
+          "file": "/tests/ev_energy_testing.js",
+          "beforeHooks": [
+            {
+              "title": "\"before each\" hook in \"EV Energy Testing\"",
+              "fullTitle": "EV Energy Testing \"before each\" hook in \"EV Energy Testing\"",
+              "timedOut": false,
+              "duration": 4104,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(50000);\n// Start a new remote session\nclient = await webdriverio.remote(config);\n// Initialize page objects with the new client session\nloginPage = new LoginPage(client);\nregistrationPage = new RegistrationPage(client);\ntestDrivePage = new TestDrivePage(client);",
+              "err": {},
+              "uuid": "6f7744b6-a43b-47ae-8b4a-0c83bc0fa9fc",
+              "parentUUID": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after each\" hook in \"EV Energy Testing\"",
+              "fullTitle": "EV Energy Testing \"after each\" hook in \"EV Energy Testing\"",
+              "timedOut": false,
+              "duration": 231,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (client && client.sessionId) {\n    try {\n        // Close the client session\n        await client.deleteSession();\n    } catch (error) {\n        console.error('Failed to close the client session:', error);\n    }\n}",
+              "err": {},
+              "uuid": "5cb30698-a736-4741-954b-2bb6b27fb696",
+              "parentUUID": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "tests login functionality with fake credentials",
+              "fullTitle": "EV Energy Testing tests login functionality with fake credentials",
+              "timedOut": false,
+              "duration": 13735,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const randomEmail = faker.internet.email();\nconst randomPassword = faker.internet.password();\nconst errorMessage = await loginPage.login(randomEmail, randomPassword);\nawait saveTestData(randomEmail, randomPassword);\nexpect(errorMessage).to.equal('We don’t recognise that email or password. Check details and try again.');",
+              "err": {},
+              "uuid": "7ba0d3fc-b697-4998-a260-babc256727e9",
+              "parentUUID": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "tests registration process with toggling switches",
+              "fullTitle": "EV Energy Testing tests registration process with toggling switches",
+              "timedOut": false,
+              "duration": 9986,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(50000);\n    \nconst fullName = faker.name.findName();\nconst email = faker.internet.email();\nconst password = faker.internet.password();\n    \nawait registrationPage.startSetup(fullName, email, password);\n    \nawait registrationPage.toggleTermsSwitch();\nawait registrationPage.togglePromoSwitch();\n    \nawait registrationPage.clickCreateAccountButton();\n    \nconst loadingImageDisplayed = await registrationPage.isLoadingImageDisplayed();\nexpect(loadingImageDisplayed).to.be.true;",
+              "err": {},
+              "uuid": "fd40ad8e-a4ce-4f99-a64c-bf6facced365",
+              "parentUUID": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should click the 'test drive' button",
+              "fullTitle": "EV Energy Testing should click the 'test drive' button",
+              "timedOut": false,
+              "duration": 8694,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(50000);\n\n    const testDriveButtonSelector = '//android.widget.TextView[@text=\"Test drive the app\"]';\n    const testDriveButton = await client.$(testDriveButtonSelector);\n    await testDriveButton.click();\n\n    const nextButtonSelector = 'android=new UiSelector().className(\"android.widget.TextView\").text(\"Next\")';\n\n    const firstNextButton = await client.$(nextButtonSelector);\n    await firstNextButton.click();\n    \n    await client.pause(2000); // may need to adjust the time based on how long the UI takes to update\n    \n    const secondNextButton = await client.$(nextButtonSelector);\n    await secondNextButton.click();\n\n    await client.pause(2000);\n    const thirdNextButton = await client.$(nextButtonSelector);\n    await thirdNextButton.click();\n\n\n    const finishTourButtonSelector = '//android.widget.TextView[@text=\"Finish tour\"]';\n    const finishTourButton = await client.$(finishTourButtonSelector);\n    await finishTourButton.click();\n\n    const modelX = '//android.widget.TextView[@text=\"Tesla Model X\"]';\n    const vehicleInfo = await client.$(modelX);\n    const text = await vehicleInfo.getText();\n    expect(text).to.equal('Tesla Model X');",
+              "err": {},
+              "uuid": "8bfc1a1a-33fe-4dca-bf8e-460e38f6d316",
+              "parentUUID": "d9ec5360-dd18-450d-b5a6-af15b7e6b2db",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "7ba0d3fc-b697-4998-a260-babc256727e9",
+            "fd40ad8e-a4ce-4f99-a64c-bf6facced365",
+            "8bfc1a1a-33fe-4dca-bf8e-460e38f6d316"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 32415,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 50000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "[object Object]": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
