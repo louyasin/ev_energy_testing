@@ -57,7 +57,3 @@ After running the tests, Mochawesome generates an HTML report detailing the resu
 Louie Yasin
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-### Acknowledgments
-Thanks to the open-source community for maintaining such helpful tools for automated testing.
-Thanks to all contributors who have invested time in improving the test suite.
